@@ -2,7 +2,7 @@ package com.rei.models.dto;
 
 import java.util.Objects;
 
-public class StudentsDto {
+public class StudentDto {
 
     private Long id;
     private String firstName;
@@ -54,7 +54,7 @@ public class StudentsDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudentsDto that = (StudentsDto) o;
+        StudentDto that = (StudentDto) o;
         return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(email, that.email) && Objects.equals(course, that.course);
     }
 

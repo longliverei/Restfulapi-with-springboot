@@ -2,7 +2,7 @@ package com.rei.models.entity;
 
 import java.util.Objects;
 
-public class Students {
+public class Student {
 
     private Long id;
     private String firstName;
@@ -54,8 +54,8 @@ public class Students {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Students students = (Students) o;
-        return Objects.equals(id, students.id) && Objects.equals(firstName, students.firstName) && Objects.equals(lastName, students.lastName) && Objects.equals(email, students.email) && Objects.equals(course, students.course);
+        Student student = (Student) o;
+        return Objects.equals(id, student.id) && Objects.equals(firstName, student.firstName) && Objects.equals(lastName, student.lastName) && Objects.equals(email, student.email) && Objects.equals(course, student.course);
     }
 
     @Override
