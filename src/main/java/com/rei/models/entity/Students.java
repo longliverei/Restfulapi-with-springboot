@@ -1,4 +1,4 @@
-package com.rei.models;
+package com.rei.models.entity;
 
 import java.util.Objects;
 
