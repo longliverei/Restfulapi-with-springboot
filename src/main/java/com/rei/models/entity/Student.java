@@ -1,13 +1,32 @@
 package com.rei.models.entity;
 
+import jakarta.persistence.*;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Student {
+@Entity
+@Table(name = "students")
+public class Student implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "first_name", length = 100, nullable = false)
     private String firstName;
+
+    @Column(name = "last_name", length = 100, nullable = false)
     private String lastName;
+
+    @Column(length = 100, nullable = false)
     private String email;
+
+    @Column(length = 100, nullable = false)
     private String course;
 
     public Long getId() {

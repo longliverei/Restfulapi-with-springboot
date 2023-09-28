@@ -45,7 +45,7 @@ public class StudentsService {
 
     public StudentDto update(StudentDto studentDto) {
 
-        Student entity = mapper.dtoToEntity(studentDto);
+        Student entity = repository.findById(studentDto.getId()).orElseThrow();
 
         entity.setFirstName(studentDto.getFirstName());
         entity.setLastName(studentDto.getLastName());
