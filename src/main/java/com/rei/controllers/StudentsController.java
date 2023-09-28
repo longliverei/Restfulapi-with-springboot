@@ -2,7 +2,6 @@ package com.rei.controllers;
 
 import com.rei.models.dto.StudentDto;
 import com.rei.services.StudentsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.List;
 @RequestMapping("/api/students/v1")
 public class StudentsController {
 
-    @Autowired
-    private StudentsService service;
+    private final StudentsService service;
+
+    public StudentsController(StudentsService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public List<StudentDto> findAll() {
@@ -42,7 +44,7 @@ public class StudentsController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(Long id) {
+    public void delete(@PathVariable("id") Long id) {
 
         service.delete(id);
 

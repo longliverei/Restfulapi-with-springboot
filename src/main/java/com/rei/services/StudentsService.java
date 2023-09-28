@@ -4,20 +4,21 @@ import com.rei.mappers.StudentsMapper;
 import com.rei.models.dto.StudentDto;
 import com.rei.models.entity.Student;
 import com.rei.repository.StudentsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class StudentsService {
 
-    @Autowired
-    private StudentsRepository repository;
+    private final StudentsRepository repository;
 
-    @Autowired
-    private StudentsMapper mapper;
+    private final StudentsMapper mapper;
+
+    public StudentsService(StudentsRepository repository, StudentsMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     public List<StudentDto> findAll() {
 
