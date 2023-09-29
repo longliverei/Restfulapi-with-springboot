@@ -1,5 +1,6 @@
 package com.rei.services;
 
+import com.rei.exceptions.ResourceNotFoundException;
 import com.rei.mappers.StudentsMapper;
 import com.rei.models.dto.StudentDto;
 import com.rei.models.entity.Student;
@@ -30,7 +31,8 @@ public class StudentsService {
 
     public StudentDto findById(Long id) {
 
-        Student entity = repository.findById(id).orElseThrow();
+        Student entity = repository.findById(id)
+                                    .orElseThrow(()-> new ResourceNotFoundException("No records found for this id."));
 
         return mapper.entityToDto(entity);
     }
@@ -45,7 +47,8 @@ public class StudentsService {
 
     public StudentDto update(StudentDto studentDto) {
 
-        Student entity = repository.findById(studentDto.getId()).orElseThrow();
+        Student entity = repository.findById(studentDto.getId())
+                                    .orElseThrow(()-> new ResourceNotFoundException("No records found for this id."));
 
         entity.setFirstName(studentDto.getFirstName());
         entity.setLastName(studentDto.getLastName());
@@ -53,11 +56,13 @@ public class StudentsService {
         entity.setCourse(studentDto.getCourse());
 
         return mapper.entityToDto(repository.save(entity));
+
     }
 
     public void delete(Long id) {
 
-        Student entity = repository.findById(id).orElseThrow();
+        Student entity = repository.findById(id)
+                                    .orElseThrow(()-> new ResourceNotFoundException("No records found for this id."));
 
         repository.delete(entity);
 
