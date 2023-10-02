@@ -1,5 +1,6 @@
 package com.rei.services;
 
+import com.rei.controllers.StudentsController;
 import com.rei.exceptions.ResourceNotFoundException;
 import com.rei.mappers.StudentsMapper;
 import com.rei.models.dto.StudentDto;
@@ -8,6 +9,9 @@ import com.rei.repository.StudentsRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class StudentsService {
@@ -25,7 +29,11 @@ public class StudentsService {
 
         List<Student> entityList = repository.findAll();
 
-        return mapper.entityListToDtoList(entityList);
+        List<StudentDto> dtoList = mapper.entityListToDtoList(entityList);
+        dtoList
+                .forEach(dto -> dto.add(linkTo(methodOn(StudentsController.class).findById(dto.getId())).withSelfRel()));
+
+        return dtoList;
 
     }
 
@@ -34,14 +42,21 @@ public class StudentsService {
         Student entity = repository.findById(id)
                                     .orElseThrow(()-> new ResourceNotFoundException("No records found for this id."));
 
-        return mapper.entityToDto(entity);
+        StudentDto dto = mapper.entityToDto(entity);
+        dto.add(linkTo(methodOn(StudentsController.class).findById(dto.getId())).withSelfRel());
+
+        return dto;
+
     }
 
     public StudentDto create(StudentDto studentDto) {
 
         Student entity = mapper.dtoToEntity(studentDto);
 
-        return mapper.entityToDto(repository.save(entity));
+        StudentDto dto = mapper.entityToDto(repository.save(entity));
+        dto.add(linkTo(methodOn(StudentsController.class).findById(dto.getId())).withSelfRel());
+
+        return dto;
 
     }
 
@@ -55,7 +70,10 @@ public class StudentsService {
         entity.setEmail(studentDto.getEmail());
         entity.setCourse(studentDto.getCourse());
 
-        return mapper.entityToDto(repository.save(entity));
+        StudentDto dto = mapper.entityToDto(repository.save(entity));
+        dto.add(linkTo(methodOn(StudentsController.class).findById(dto.getId())).withSelfRel());
+
+        return dto;
 
     }
 
