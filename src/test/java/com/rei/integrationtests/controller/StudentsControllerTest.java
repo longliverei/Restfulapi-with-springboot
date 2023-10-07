@@ -14,6 +14,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
+import static org.hamcrest.Matchers.equalTo;
 
 import static io.restassured.RestAssured.given;
 
@@ -59,15 +60,16 @@ public class StudentsControllerTest {
         dto.setEmail("vento@aureo.com");
         dto.setCourse("Ciência da Computação");
 
-        service.create(dto);
-
         given()
                 .contentType(ContentType.JSON)
                 .body(dto)
                 .when()
                 .post("/api/students/v1")
                 .then()
-                .statusCode(200);
+                .assertThat()
+                .statusCode(200)
+                .and()
+                .body("id", equalTo(1));
     }
 
 }
