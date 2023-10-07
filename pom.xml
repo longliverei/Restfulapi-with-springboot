@@ -19,6 +19,7 @@
 		<postgresql.version>42.6.0</postgresql.version>
 		<testcontainers.version>1.19.1</testcontainers.version>
 		<flyway.version>9.22.2</flyway.version>
+		<hamcrest.version>2.2</hamcrest.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -83,6 +84,13 @@
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest</artifactId>
+			<version>${hamcrest.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
