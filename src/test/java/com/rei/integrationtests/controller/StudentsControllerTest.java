@@ -51,7 +51,7 @@ public class StudentsControllerTest {
     }
 
     @Test
-    void shouldCreateStudentDto() {
+    void shouldCreateStudent() {
         StudentDto dto = new StudentDto();
         dto.setId(1L);
         dto.setFirstName("Vento");
@@ -63,6 +63,7 @@ public class StudentsControllerTest {
 
         given()
                 .contentType(ContentType.JSON)
+                .body(dto)
                 .when()
                 .post("/api/students/v1")
                 .then()
