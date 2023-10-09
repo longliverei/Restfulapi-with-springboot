@@ -1,6 +1,4 @@
-CREATE SCHEMA IF NOT EXISTS public;
-
-CREATE TABLE public.students (
+CREATE TABLE students (
     id bigserial NOT NULL ,
     first_name varchar(30) NOT NULL,
     last_name varchar(50) NOT NULL,
