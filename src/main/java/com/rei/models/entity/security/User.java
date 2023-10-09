@@ -1,4 +1,4 @@
-package com.rei.models.entity;
+package com.rei.models.entity.security;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
