@@ -2,6 +2,7 @@ package com.rei.controllers;
 
 import com.rei.models.dto.StudentDto;
 import com.rei.services.StudentsService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,23 +32,23 @@ public class StudentsController {
     }
 
     @PostMapping
-    public StudentDto create(@RequestBody StudentDto studentDto) {
+    public ResponseEntity<?> create(@RequestBody StudentDto studentDto) {
 
         return service.create(studentDto);
 
     }
 
     @PutMapping
-    public StudentDto update(@RequestBody StudentDto studentDto) {
+    public ResponseEntity<?> update(@RequestBody StudentDto studentDto) {
 
         return service.update(studentDto);
 
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 
-        service.delete(id);
+        return service.delete(id);
 
     }
 
