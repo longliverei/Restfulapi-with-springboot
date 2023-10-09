@@ -6,6 +6,7 @@ import com.rei.mappers.StudentsMapper;
 import com.rei.models.dto.StudentDto;
 import com.rei.models.entity.Student;
 import com.rei.repository.StudentsRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,18 +50,18 @@ public class StudentsService {
 
     }
 
-    public StudentDto create(StudentDto studentDto) {
+    public ResponseEntity<?> create(StudentDto studentDto) {
 
         Student entity = mapper.dtoToEntity(studentDto);
 
         StudentDto dto = mapper.entityToDto(repository.save(entity));
         dto.add(linkTo(methodOn(StudentsController.class).findById(dto.getId())).withSelfRel());
 
-        return dto;
+        return ResponseEntity.created(linkTo(methodOn(StudentsController.class).findById(dto.getId())).withSelfRel().toUri()).build();
 
     }
 
-    public StudentDto update(StudentDto studentDto) {
+    public ResponseEntity<?> update(StudentDto studentDto) {
 
         Student entity = repository.findById(studentDto.getId())
                                     .orElseThrow(()-> new ResourceNotFoundException("No records found for this id."));
@@ -73,16 +74,18 @@ public class StudentsService {
         StudentDto dto = mapper.entityToDto(repository.save(entity));
         dto.add(linkTo(methodOn(StudentsController.class).findById(dto.getId())).withSelfRel());
 
-        return dto;
+        return ResponseEntity.noContent().build();
 
     }
 
-    public void delete(Long id) {
+    public ResponseEntity<?> delete(Long id) {
 
         Student entity = repository.findById(id)
                                     .orElseThrow(()-> new ResourceNotFoundException("No records found for this id."));
 
         repository.delete(entity);
+
+        return ResponseEntity.noContent().build();
 
     }
 
