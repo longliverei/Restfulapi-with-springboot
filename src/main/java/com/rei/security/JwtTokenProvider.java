@@ -18,7 +18,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Base64;
 import java.util.Date;
-import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 
 @Service
