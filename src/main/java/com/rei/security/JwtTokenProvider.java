@@ -110,4 +110,16 @@ public class JwtTokenProvider {
         }
     }
 
+    public TokenDto refreshToken(String refreshToken) {
+        if (refreshToken.contains("Bearer ")) refreshToken = refreshToken.substring("Bearer ".length());
+
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+
+        DecodedJWT decodedJWT = jwtVerifier.verify(refreshToken);
+
+        String username = decodedJWT.getSubject();
+        List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
+
+        return createAccessToken(username, roles);
+    }
 }
