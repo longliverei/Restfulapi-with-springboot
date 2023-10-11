@@ -1,5 +1,6 @@
 package com.rei.exceptions.handler;
 
+import com.rei.exceptions.InvalidJwtAuthenticationException;
 import com.rei.exceptions.ResourceNotFoundException;
 import com.rei.exceptions.RestErrorResponse;
 import org.springframework.http.HttpHeaders;
@@ -40,6 +41,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    public final ResponseEntity<RestErrorResponse> handleInvalidJwtAuthenticationException(ResourceNotFoundException ex) {
+
+        RestErrorResponse response = new RestErrorResponse(
+                HttpStatus.FORBIDDEN.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 
     }
 
