@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -50,6 +51,16 @@ public class User implements UserDetails, Serializable {
     )
 
     private List<Permission> permissions;
+
+    public List<String> getRoles() {
+        List<String> roles = new ArrayList<>();
+
+        for (Permission permission : permissions) {
+            roles.add(permission.getDescription());
+        }
+
+        return roles;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
