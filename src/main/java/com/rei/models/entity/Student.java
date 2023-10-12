@@ -29,6 +29,9 @@ public class Student implements Serializable {
     @Column(length = 100, nullable = false)
     private String course;
 
+    @Column(nullable = false)
+    private Boolean enabled;
+
     public Long getId() {
         return id;
     }
@@ -69,17 +72,24 @@ public class Student implements Serializable {
         this.course = course;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return Objects.equals(id, student.id) && Objects.equals(firstName, student.firstName) && Objects.equals(lastName, student.lastName) && Objects.equals(email, student.email) && Objects.equals(course, student.course);
+        return Objects.equals(id, student.id) && Objects.equals(firstName, student.firstName) && Objects.equals(lastName, student.lastName) && Objects.equals(email, student.email) && Objects.equals(course, student.course) && Objects.equals(enabled, student.enabled);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, course);
+        return Objects.hash(id, firstName, lastName, email, course, enabled);
     }
-
 }
