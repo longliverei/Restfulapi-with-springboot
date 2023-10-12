@@ -16,7 +16,6 @@ public class StudentDto extends RepresentationModel<StudentDto> implements Seria
     private String lastName;
     private String email;
     private String course;
-
     private Boolean enabled;
 
     public Long getId() {
@@ -59,16 +58,25 @@ public class StudentDto extends RepresentationModel<StudentDto> implements Seria
         this.course = course;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudentDto that = (StudentDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(email, that.email) && Objects.equals(course, that.course);
+        if (!super.equals(o)) return false;
+        StudentDto dto = (StudentDto) o;
+        return Objects.equals(id, dto.id) && Objects.equals(firstName, dto.firstName) && Objects.equals(lastName, dto.lastName) && Objects.equals(email, dto.email) && Objects.equals(course, dto.course) && Objects.equals(enabled, dto.enabled);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, course);
+        return Objects.hash(super.hashCode(), id, firstName, lastName, email, course, enabled);
     }
 }
