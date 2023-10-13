@@ -30,7 +30,7 @@ public class Student implements Serializable {
     private String course;
 
     @Column(nullable = false)
-    private Boolean enabled;
+    private Boolean enabled = true;
 
     public Long getId() {
         return id;

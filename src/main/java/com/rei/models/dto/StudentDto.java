@@ -16,7 +16,7 @@ public class StudentDto extends RepresentationModel<StudentDto> implements Seria
     private String lastName;
     private String email;
     private String course;
-    private Boolean enabled;
+    private Boolean enabled = true;
 
     public Long getId() {
         return id;
