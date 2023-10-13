@@ -6,10 +6,14 @@ import com.rei.mappers.StudentsMapper;
 import com.rei.models.dto.StudentDto;
 import com.rei.models.entity.Student;
 import com.rei.repository.StudentsRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -21,21 +25,23 @@ public class StudentsService {
 
     private final StudentsMapper mapper;
 
-    public StudentsService(StudentsRepository repository, StudentsMapper mapper) {
+    private final PagedResourcesAssembler<StudentDto> assembler;
+
+    public StudentsService(StudentsRepository repository, StudentsMapper mapper, PagedResourcesAssembler<StudentDto> assembler) {
         this.repository = repository;
         this.mapper = mapper;
+        this.assembler = assembler;
     }
 
-    public List<StudentDto> findAll() {
+    public PagedModel<EntityModel<StudentDto>> findAll(Pageable pageable) {
+        Page<Student> entityList = repository.findAll(pageable);
 
-        List<Student> entityList = repository.findAll();
+        Page<StudentDto> dtoList = entityList.map(mapper::entityToDto);
+        dtoList.map(dto -> dto.add(linkTo(methodOn(StudentsController.class).findById(dto.getId())).withSelfRel()));
 
-        List<StudentDto> dtoList = mapper.entityListToDtoList(entityList);
-        dtoList
-                .forEach(dto -> dto.add(linkTo(methodOn(StudentsController.class).findById(dto.getId())).withSelfRel()));
+        Link link = linkTo(methodOn(StudentsController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc")).withSelfRel();
 
-        return dtoList;
-
+        return assembler.toModel(dtoList, link);
     }
 
     public StudentDto findById(Long id) {
