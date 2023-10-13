@@ -3,11 +3,11 @@ package com.rei.controllers;
 import com.rei.models.dto.security.AccountCredentialsDto;
 import com.rei.services.security.AuthService;
 import jakarta.websocket.server.PathParam;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@SuppressWarnings("rawtypes")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -16,9 +16,8 @@ public class AuthController {
 
     public AuthController(AuthService authService) { this.authService = authService; }
 
-    @SuppressWarnings("rawtypes")
     @PostMapping(value = "/signin")
-    public ResponseEntity signin(@RequestBody AccountCredentialsDto data) {
+    public ResponseEntity signIn(@RequestBody AccountCredentialsDto data) {
         if (checkIfParamsIsNotNull(data)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request.");
 
         var token = authService.signin(data);
@@ -30,7 +29,7 @@ public class AuthController {
 
 
     @PutMapping(value = "/refresh/{username}")
-    public ResponseEntity refreshToken(@PathParam("username") String username, @RequestHeader("Authorization") String refreshToken) {
+    public ResponseEntity refreshToken(@PathVariable("username") String username, @RequestHeader("Authorization") String refreshToken) {
         if (checkIfParamsIsNotNull(username, refreshToken)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request.");
 
         var token = authService.refreshToken(username, refreshToken);
