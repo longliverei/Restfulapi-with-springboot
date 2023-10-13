@@ -78,6 +78,17 @@ public class StudentsService {
 
     }
 
+    public ResponseEntity<?> disablePerson(Long id) {
+
+        Student entity = repository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("No records found for this id."));
+
+        repository.disablePerson(entity.getId());
+
+        return ResponseEntity.noContent().build();
+
+    }
+
     public ResponseEntity<?> delete(Long id) {
 
         Student entity = repository.findById(id)
