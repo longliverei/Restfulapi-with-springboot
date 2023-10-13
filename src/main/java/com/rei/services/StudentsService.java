@@ -13,6 +13,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -36,6 +37,17 @@ public class StudentsService {
     public PagedModel<EntityModel<StudentDto>> findAll(Pageable pageable) {
         Page<Student> entityList = repository.findAll(pageable);
 
+        return getDtoModels(pageable, entityList);
+    }
+
+    public PagedModel<EntityModel<StudentDto>> findStudentByName(String firstName, Pageable pageable) {
+        Page<Student> entityList = repository.findStudentByName(firstName, pageable);
+
+        return getDtoModels(pageable, entityList);
+    }
+
+    @NonNull
+    private PagedModel<EntityModel<StudentDto>> getDtoModels(Pageable pageable, Page<Student> entityList) {
         Page<StudentDto> dtoList = entityList.map(mapper::entityToDto);
         dtoList.map(dto -> dto.add(linkTo(methodOn(StudentsController.class).findById(dto.getId())).withSelfRel()));
 
