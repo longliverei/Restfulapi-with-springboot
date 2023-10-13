@@ -11,8 +11,6 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
-import io.restassured.http.Headers;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
@@ -114,13 +112,29 @@ public class StudentsControllerTest {
         ValidatableResponse validatableResponse = given()
                 .spec(specification)
                 .contentType(ContentType.JSON)
+                .queryParams("page", 0, "size", 10, "direction", "asc")
                 .when()
                 .get()
                 .then()
-                .log().all().assertThat().statusCode(200);
+                .assertThat().statusCode(200);
     }
+
     @Test
     @Order(4)
+    void shouldGetStudentByName() {
+        ValidatableResponse validatableResponse = given()
+                .spec(specification)
+                .contentType(ContentType.JSON)
+                .queryParams("page", 0, "size", 10, "direction", "asc")
+                .pathParam("firstName", "Vento")
+                .when()
+                .get("/findByName/{firstName}")
+                .then()
+                .assertThat().statusCode(200);
+    }
+
+    @Test
+    @Order(5)
     void shouldUpdateStudent() {
         StudentDto dto = mock.mockStudentDto();
         dto.setFirstName("Reinaldo");
@@ -132,11 +146,11 @@ public class StudentsControllerTest {
                 .when()
                 .put()
                 .then()
-                .log().all().assertThat().statusCode(204);
+                .assertThat().statusCode(204);
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     void shouldDisableStudent() {
         ValidatableResponse validatableResponse = given()
                 .spec(specification)
@@ -144,11 +158,11 @@ public class StudentsControllerTest {
                 .when()
                 .patch("1")
                 .then()
-                .log().all().assertThat().statusCode(204);
+                .assertThat().statusCode(204);
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     void shouldGetAStudent() {
         ValidatableResponse validatableResponse = given()
                 .spec(specification)
@@ -156,13 +170,13 @@ public class StudentsControllerTest {
                 .when()
                 .get("1")
                 .then()
-                .log().all().assertThat().statusCode(200)
+                .assertThat().statusCode(200)
                 .and()
                 .body("id", equalTo(1));
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     void shouldDeleteAStudent() {
         ValidatableResponse validatableResponse = given()
                 .spec(specification)
@@ -170,7 +184,7 @@ public class StudentsControllerTest {
                 .when()
                 .delete("1")
                 .then()
-                .log().all().assertThat().statusCode(204);
+                .assertThat().statusCode(204);
     }
 
 }
