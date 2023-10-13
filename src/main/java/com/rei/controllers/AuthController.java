@@ -2,7 +2,6 @@ package com.rei.controllers;
 
 import com.rei.models.dto.security.AccountCredentialsDto;
 import com.rei.services.security.AuthService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
