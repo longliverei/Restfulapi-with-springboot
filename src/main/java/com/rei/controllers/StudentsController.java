@@ -2,6 +2,7 @@ package com.rei.controllers;
 
 import com.rei.models.dto.StudentDto;
 import com.rei.services.StudentsService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,38 +19,28 @@ public class StudentsController {
     }
 
     @GetMapping
-    public List<StudentDto> findAll() {
-
-        return service.findAll();
-
-    }
+    public List<StudentDto> findAll() { return service.findAll(); }
 
     @GetMapping("/{id}")
     public StudentDto findById(@PathVariable("id") Long id) {
-
         return service.findById(id);
-
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody StudentDto studentDto) {
-
-        return service.create(studentDto);
-
-    }
+    public ResponseEntity<?> create(@RequestBody StudentDto studentDto) { return service.create(studentDto); }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody StudentDto studentDto) {
+    public ResponseEntity<?> update(@RequestBody StudentDto studentDto) { return service.update(studentDto); }
 
-        return service.update(studentDto);
-
+    @Transactional
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> disablePerson(@PathVariable("id") Long id) {
+        return service.disablePerson(id);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-
         return service.delete(id);
-
     }
 
 }
