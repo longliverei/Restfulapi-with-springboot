@@ -1,2 +1,2 @@
-INSERT INTO users (user_name, full_name, password, account_non_expired, account_non_locked, credentials_non_expired, enabled) VALUES
+INSERT INTO users (username, full_name, password, account_non_expired, account_non_locked, credentials_non_expired, enabled) VALUES
     ('admin', 'Reinaldo Yabiku', '3bff3de398d745fa6be211241708e60c43a9a829c7fc0a3e0f14e8ba90598a51bd5fc2c57dd4b31f', bit'1', bit'1', bit'1', bit'1')

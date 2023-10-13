@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS users (
     id bigserial NOT NULL,
-    user_name varchar(255) DEFAULT NULL,
+    username varchar(255) DEFAULT NULL,
     full_name varchar(255) DEFAULT NULL,
     password varchar(255) DEFAULT NULL,
     account_non_expired bit(1) DEFAULT NULL,
@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS users (
     credentials_non_expired bit(1) DEFAULT NULL,
     enabled bit(1) DEFAULT NULL,
     PRIMARY KEY (id),
-    UNIQUE (user_name)
+    UNIQUE (username)
 )

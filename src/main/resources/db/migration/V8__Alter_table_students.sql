@@ -1,2 +1,2 @@
 ALTER TABLE students
-    ADD COLUMN enabled bit(1) NOT NULL DEFAULT bit'1';
+    ADD COLUMN enabled boolean NOT NULL DEFAULT true;
