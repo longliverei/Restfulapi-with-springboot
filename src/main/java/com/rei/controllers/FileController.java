@@ -26,7 +26,7 @@ public class FileController {
         this.fileStorageService = fileStorageService;
     }
 
-    @PostMapping(value = "/uploadFile")
+    @PostMapping("/uploadFile")
     public UploadFileResponseDto uploadFile(@RequestParam("file") MultipartFile file) {
         var filename = fileStorageService.storeFile(file);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -37,14 +37,14 @@ public class FileController {
         return new UploadFileResponseDto(filename, fileDownloadUri, file.getContentType(), file.getSize());
     }
 
-    @PostMapping(value = "/uploadMultipleFiles")
+    @PostMapping("/uploadMultipleFiles")
     public List<UploadFileResponseDto> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.stream(files)
                 .map(this::uploadFile)
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(value = "/downloadFile/{filename:.+}")
+    @GetMapping("/downloadFile/{filename:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename, HttpServletRequest request) throws FileNotFoundException {
         Resource resource = fileStorageService.loadFileAsResource(filename);
 
