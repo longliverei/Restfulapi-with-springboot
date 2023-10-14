@@ -1,5 +1,6 @@
 package com.rei.exceptions.handler;
 
+import com.rei.exceptions.FileStorageException;
 import com.rei.exceptions.InvalidJwtAuthenticationException;
 import com.rei.exceptions.ResourceNotFoundException;
 import com.rei.exceptions.RestErrorResponse;
@@ -55,6 +56,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 
+    }
+
+    @ExceptionHandler(FileStorageException.class)
+    public final ResponseEntity<RestErrorResponse> handleFileStorageException(FileStorageException ex) {
+        RestErrorResponse response = new RestErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
