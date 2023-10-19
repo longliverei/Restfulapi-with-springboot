@@ -2,6 +2,7 @@ package com.rei.controllers;
 
 import com.rei.models.dto.UploadFileResponseDto;
 import com.rei.services.FileStorageService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/file/v1")
+@Tag(name = "Files", description = "Endpoint for managing Upload and Download")
 public class FileController {
 
     private final FileStorageService fileStorageService;
