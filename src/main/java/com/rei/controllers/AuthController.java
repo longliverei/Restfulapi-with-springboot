@@ -2,6 +2,8 @@ package com.rei.controllers;
 
 import com.rei.models.dto.security.AccountCredentialsDto;
 import com.rei.services.security.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @SuppressWarnings("rawtypes")
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Auth", description = "Endpoint for managing authentication")
 public class AuthController {
 
     private final AuthService authService;
@@ -16,6 +19,7 @@ public class AuthController {
     public AuthController(AuthService authService) { this.authService = authService; }
 
     @PostMapping(value = "/signin")
+    @Operation(summary = "Auth a user and return a token")
     public ResponseEntity signIn(@RequestBody AccountCredentialsDto data) {
         if (checkIfParamsIsNotNull(data)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request.");
 
@@ -28,6 +32,7 @@ public class AuthController {
 
 
     @PutMapping(value = "/refresh/{username}")
+    @Operation(summary = "Refresh a token")
     public ResponseEntity refreshToken(@PathVariable("username") String username, @RequestHeader("Authorization") String refreshToken) {
         if (checkIfParamsIsNotNull(username, refreshToken)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request.");
 
