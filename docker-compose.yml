@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: postgres:16.0
+    restart: always
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: university
+      TZ: America/Sao_Paulo
+    ports:
+      - "5432:5432"
+    networks:
+      - rei-network
+
+  restful-api-with-spring-boot:
+    image: longliverei/restful-api-with-spring-boot
+    restart: always
+    build: ./Restapi-with-springboot
+    working_dir: /Restapi-with-springboot
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING.DATASOURCE.URL: jdbc:postgresql://db:5432/university
+      SPRING.DATASOURCE.USERNAME: postgres
+      SPRING.DATASOURCE.PASSWORD: admin
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    networks:
+      - rei-network
+
+networks:
+  rei-network:
+    driver: bridge
