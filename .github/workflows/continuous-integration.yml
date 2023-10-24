@@ -40,6 +40,7 @@ jobs:
       run: mvn clean package
       
     - name: Docker Compose Build
+      working-directory: /home/runner/work/Restfulapi-with-springboot/Restfulapi-with-springboot
       run: docker compose build
 
     - name: Push to Docker Hub
