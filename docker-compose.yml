@@ -18,8 +18,8 @@ services:
   restful-api-with-spring-boot:
     image: longliverei/restful-api-with-spring-boot
     restart: always
-    build: ./Restapi-with-springboot
-    working_dir: /Restapi-with-springboot
+    build: ./api
+    working_dir: /Restfulapi-with-springboot
     environment:
       TZ: America/Sao_Paulo
       SPRING.DATASOURCE.URL: jdbc:postgresql://db:5432/university
