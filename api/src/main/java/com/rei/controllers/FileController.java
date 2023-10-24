@@ -4,6 +4,7 @@ import com.rei.models.dto.UploadFileResponseDto;
 import com.rei.services.FileStorageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,11 +23,8 @@ import java.util.stream.Collectors;
 @Tag(name = "Files", description = "Endpoint for managing Upload and Download")
 public class FileController {
 
-    private final FileStorageService fileStorageService;
-
-    public FileController(FileStorageService fileStorageService) {
-        this.fileStorageService = fileStorageService;
-    }
+    @Autowired
+    private FileStorageService fileStorageService;
 
     @PostMapping("/uploadFile")
     public UploadFileResponseDto uploadFile(@RequestParam("file") MultipartFile file) {
@@ -50,7 +48,7 @@ public class FileController {
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename, HttpServletRequest request) throws FileNotFoundException {
         Resource resource = fileStorageService.loadFileAsResource(filename);
 
-        String contentType = "";
+        String contentType;
 
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
